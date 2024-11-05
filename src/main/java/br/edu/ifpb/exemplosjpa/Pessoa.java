@@ -1,32 +1,36 @@
 package br.edu.ifpb.exemplosjpa;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.TableGenerator;
 
 @Entity
 public class Pessoa {
 
-    @EmbeddedId
-    private Documento documento;
-
+    @Id
+    @TableGenerator(
+            name = "table_gen",
+            table = "sequencias",
+            pkColumnName = "nome_sequencia",
+            pkColumnValue = "pessoa_seq",
+            valueColumnName = "seq_contador",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "table_gen")
+    private Long id;
     private String nome;
 
-    @Embedded
-    private Endereco endereco;
-
-    @Enumerated(EnumType.STRING)
-    private Sexo sexo;
-
     public Pessoa() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -35,29 +39,5 @@ public class Pessoa {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Sexo getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(Sexo sexo) {
-        this.sexo = sexo;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public Documento getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(Documento documento) {
-        this.documento = documento;
     }
 }
