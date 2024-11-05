@@ -1,9 +1,12 @@
 package br.edu.ifpb.exemplosjpa;
 
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
@@ -12,6 +15,8 @@ import jakarta.persistence.SequenceGenerator;
         sequenceName = "evento_seq",
         allocationSize = 1
 )
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "tipo")
 public class Evento {
 
     @Id
