@@ -9,6 +9,7 @@ import jakarta.validation.constraints.PastOrPresent;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
+import java.util.StringJoiner;
 
 @Entity
 public class Pessoa {
@@ -65,5 +66,16 @@ public class Pessoa {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Pessoa.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("nome='" + nome + "'")
+                .add("sobrenome='" + sobrenome + "'")
+                .add("cpf='" + cpf + "'")
+                .add("dataNascimento=" + dataNascimento)
+                .toString();
     }
 }

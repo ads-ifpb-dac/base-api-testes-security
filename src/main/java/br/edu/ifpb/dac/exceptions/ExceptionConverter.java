@@ -1,5 +1,6 @@
 package br.edu.ifpb.dac.exceptions;
 
+import br.edu.ifpb.dac.pessoa.DadosPessoaInvalidosException;
 import br.edu.ifpb.dac.pessoa.PessoaNaoEncontradaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,6 +21,15 @@ public class ExceptionConverter {
         formato a sua escolha. Aqui, utilizei ExceptionDTO, mas pode ser qualquer formato que você desejar.
          */
         String message = e.getMessage();
+        return new ExceptionDTO(message);
+    }
+
+    @ExceptionHandler(DadosPessoaInvalidosException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ExceptionDTO converter(DadosPessoaInvalidosException e) {
+        String message = e.getMessage();
+        String detalhes = String.format("%s", e.getPessoa().toString());
         return new ExceptionDTO(message);
     }
 

@@ -7,5 +7,6 @@ import java.util.List;
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
     List<Pessoa> findByNome(String nome);
+    List<Pessoa> findByNomeAndSobrenome(String nome, String sobrenome);
 
 }
