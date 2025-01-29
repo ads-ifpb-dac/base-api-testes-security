@@ -24,7 +24,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
 @EnableAutoConfiguration(exclude = {FlywayAutoConfiguration.class, JpaRepositoriesAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 class PessoaServiceTest {
 
@@ -44,7 +43,7 @@ class PessoaServiceTest {
         pessoaMock.setDataNascimento(LocalDate.of(1989, 2, 2));
 
         when(pessoaRepository.save(Mockito.any(Pessoa.class))).thenReturn(new Pessoa());
-        when(pessoaRepository.findByNomeAndSobrenome(anyString(), anyString())).thenReturn(List.of(pessoaMock));
+        when(pessoaRepository.findByNomeAndSobrenome("Fulano", "Moreira")).thenReturn(List.of(pessoaMock));
     }
 
     @Test
