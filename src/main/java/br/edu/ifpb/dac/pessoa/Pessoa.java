@@ -22,7 +22,7 @@ public class Pessoa {
     private String nome;
     private String sobrenome;
 
-    @Length(min = 11, max = 11)
+    @Length(min = 11, max = 11, message = "O CPF deve ter 11 caracteres")
     private String cpf;
 
     @PastOrPresent

@@ -1,7 +1,9 @@
 package br.edu.ifpb.dac.pessoa;
 
+import br.edu.ifpb.dac.usuario.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -38,20 +41,23 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<Pessoa> criarPessoa(@RequestBody @Valid Pessoa pessoa) {
+    public ResponseEntity<Pessoa> criarPessoa(@RequestBody @Valid Pessoa pessoa, Authentication authentication) {
+        Usuario usuario = (Usuario) authentication.getPrincipal();
         this.pessoaService.salvar(pessoa);
-        return ResponseEntity.ok(pessoa);
+        return ResponseEntity.created(URI.create("/pessoas/" + pessoa.getId())).body(pessoa);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Pessoa> atualizarPessoa(@RequestBody Pessoa pessoa, @PathVariable Long id) {
-        Pessoa pessoaExistente = this.pessoaService.buscarPorId(id);
-        if (pessoaExistente == null) {
+        Pessoa pessoaExistente;
+        try {
+            pessoaExistente = this.pessoaService.buscarPorId(id);
+        } catch (PessoaNaoEncontradaException e) {
             return ResponseEntity.notFound().build();
         }
         pessoa.setId(id);
         pessoaService.atualizar(pessoa);
-        return ResponseEntity.ok(pessoa);
+        return ResponseEntity.ok().body(pessoa);
     }
 
     @DeleteMapping("/{id}")

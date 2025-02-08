@@ -32,6 +32,7 @@ class PessoaServiceIntegrationTest {
     void salvar() {
         Pessoa pessoa = new Pessoa();
         pessoa.setNome("Fulano");
+        pessoa.setSobrenome("Moreira");
         pessoaService.salvar(pessoa);
         assertNotNull(pessoa.getId());
     }

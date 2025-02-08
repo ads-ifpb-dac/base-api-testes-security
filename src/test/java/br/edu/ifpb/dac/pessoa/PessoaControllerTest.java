@@ -46,8 +46,9 @@ class PessoaControllerTest {
                     "dataNascimento": "1989-02-02"
                 }
                 """;
-        mvc.perform(post("/pessoas").contentType(MediaType.APPLICATION_JSON).content(json))
-                .andExpect(status().isOk())
+        mvc.perform(post("/pessoas")
+                        .contentType(MediaType.APPLICATION_JSON).content(json))
+                .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.id").isNotEmpty());
@@ -64,7 +65,8 @@ class PessoaControllerTest {
                     "dataNascimento": "1989-02-02"
                 }
                 """;
-        mvc.perform(post("/pessoas").contentType(MediaType.APPLICATION_JSON).content(json))
+        mvc.perform(post("/pessoas")
+                        .contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isBadRequest());
     }
 }
