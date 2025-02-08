@@ -32,7 +32,7 @@ class PessoaServiceTest {
     private PessoaRepository pessoaRepository;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         Pessoa pessoaMock = new Pessoa();
         pessoaMock.setId(1L);
         pessoaMock.setNome("Fulano");
@@ -51,6 +51,7 @@ class PessoaServiceTest {
         pessoa.setNome("Fulano");
         pessoa.setSobrenome("da Silva");
         pessoaService.salvar(pessoa);
+        assertNotNull(pessoa.getId());
     }
 
     @Test

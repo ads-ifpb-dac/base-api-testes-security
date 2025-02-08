@@ -79,7 +79,7 @@ public class GlobalExceptionHandler {
     public ExceptionDTO converter(DadosPessoaInvalidosException e) {
         String message = e.getMessage();
         String detalhes = String.format("%s", e.getPessoa().toString());
-        return new ExceptionDTO(message);
+        return new ExceptionDTO(detalhes);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
